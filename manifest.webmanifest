@@ -1,0 +1,12 @@
+{
+  "name": "המטבח של אמא",
+  "short_name": "מתכונים",
+  "description": "ספר המתכונים המשפחתי",
+  "lang": "he",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fff8f5",
+  "theme_color": "#8f293e"
+}
