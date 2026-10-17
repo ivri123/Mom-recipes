@@ -851,6 +851,123 @@ $("detailDelete").onclick = () => {
 
 render();
 })();
+</script
+  
+<!-- זיהוי טקסט מתמונה -->
+<section id="imageTextReader" dir="rtl" style="margin:20px auto;padding:20px;max-width:700px;background:#fff7f7;border:2px solid #e7a0a0;border-radius:16px;font-family:Arial,sans-serif;color:#492222;">
+  <h2 style="margin-top:0;">📷 חילוץ טקסט מתמונה</h2>
+  <p>בחרו תמונה של מתכון, והאתר ינסה לזהות את הטקסט שבה.</p>
+
+  <input id="recipeTextImage" type="file" accept="image/*" style="display:block;margin:14px 0;max-width:100%;">
+
+  <button id="readRecipeImage" type="button" style="padding:12px 18px;border:0;border-radius:10px;background:#a62929;color:white;font-size:16px;cursor:pointer;">
+    🔍 זיהוי טקסט בתמונה
+  </button>
+
+  <p id="recipeImageStatus" role="status">מוכן לבחירת תמונה.</p>
+
+  <textarea id="recipeImageText" rows="10" placeholder="הטקסט שיזוהה יופיע כאן..." style="box-sizing:border-box;width:100%;padding:12px;border:1px solid #d9bcbc;border-radius:10px;font-size:16px;line-height:1.6;"></textarea>
+
+  <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;">
+    <button id="copyRecipeImageText" type="button" style="padding:10px 14px;border:0;border-radius:8px;background:#633333;color:white;cursor:pointer;">📋 העתקת הטקסט</button>
+    <button id="downloadRecipeImageText" type="button" style="padding:10px 14px;border:0;border-radius:8px;background:#633333;color:white;cursor:pointer;">⬇️ הורדת TXT</button>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script>
+(() => {
+  const imageInput = document.getElementById('recipeTextImage');
+  const readButton = document.getElementById('readRecipeImage');
+  const status = document.getElementById('recipeImageStatus');
+  const output = document.getElementById('recipeImageText');
+  const copyButton = document.getElementById('copyRecipeImageText');
+  const downloadButton = document.getElementById('downloadRecipeImageText');
+
+  if (!imageInput || !readButton || !status || !output) return;
+
+  readButton.addEventListener('click', async () => {
+    const file = imageInput.files && imageInput.files[0];
+
+    if (!file) {
+      status.textContent = 'בחרו קודם תמונה.';
+      return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+      status.textContent = 'יש לבחור קובץ תמונה.';
+      return;
+    }
+
+    if (!window.Tesseract) {
+      status.textContent = 'לא הצלחנו לטעון את מנוע זיהוי הטקסט. בדקו את החיבור לאינטרנט ונסו שוב.';
+      return;
+    }
+
+    readButton.disabled = true;
+    output.value = '';
+    status.textContent = 'טוען מנוע זיהוי טקסט...';
+
+    try {
+      const result = await Tesseract.recognize(file, 'heb+eng', {
+        logger: (message) => {
+          if (message.status === 'recognizing text') {
+            status.textContent =
+              'מזהה טקסט... ' +
+              Math.round((message.progress || 0) * 100) + '%';
+          } else if (message.status === 'loading language traineddata') {
+            status.textContent = 'מוריד נתוני שפה...';
+          }
+        }
+      });
+
+      output.value = result.data.text.trim();
+      status.textContent = output.value
+        ? 'הסתיים! בדקו את הטקסט ותקנו טעויות אם צריך.'
+        : 'לא זוהה טקסט. נסו תמונה ברורה יותר.';
+    } catch (error) {
+      console.error(error);
+      status.textContent = 'הזיהוי נכשל. בדקו את החיבור לאינטרנט ונסו שוב.';
+    } finally {
+      readButton.disabled = false;
+    }
+  });
+
+  copyButton.addEventListener('click', async () => {
+    if (!output.value.trim()) {
+      status.textContent = 'אין טקסט להעתיק עדיין.';
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(output.value);
+      status.textContent = 'הטקסט הועתק בהצלחה!';
+    } catch (error) {
+      output.focus();
+      output.select();
+      status.textContent = 'סמנו את הטקסט והעתיקו בעזרת Ctrl+C.';
+    }
+  });
+
+  downloadButton.addEventListener('click', () => {
+    if (!output.value.trim()) {
+      status.textContent = 'אין טקסט להוריד עדיין.';
+      return;
+    }
+
+    const blob = new Blob(['\uFEFF' + output.value], {
+      type: 'text/plain;charset=utf-8'
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'טקסט-מהמתכון.txt';
+    link.click();
+    URL.revokeObjectURL(url);
+    status.textContent = 'קובץ הטקסט הורד.';
+  });
+})();
 </script>
+>
 </body>
 </html>
