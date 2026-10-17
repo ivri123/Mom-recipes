@@ -1,402 +1,852 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#8f293e">
 <title>המתכונים של אמא</title>
+
 <style>
-:root{--bg:#fff8f5;--ink:#352421;--muted:#806b66;--red:#a92e48;--pink:#fae8e5;--line:#efd8d2;--shadow:0 10px 28px #60232a12}
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(circle at 90% 0,#ffe8df 0,transparent 34%),var(--bg);font-family:Arial,sans-serif;color:var(--ink);min-height:100vh}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer;border:0;border-radius:13px;padding:11px 14px;font-weight:700}
-.primary{background:linear-gradient(135deg,#9e2942,#d65b68);color:white}
-.soft{background:var(--pink);color:var(--red);border:1px solid var(--line)}
-.wrap{max-width:1200px;margin:auto;padding:20px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{background:linear-gradient(145deg,#702331,#b94755);width:60px;height:60px;border-radius:18px;display:grid;place-items:center;flex-shrink:0}
-.brand h1{font-size:clamp(24px,4vw,34px);margin:0}
-.brand p{margin:5px 0;color:var(--muted);font-size:14px}
-.actions{display:flex;gap:8px;flex-wrap:wrap}
-.hero{margin:22px 0;padding:clamp(22px,4vw,38px);border-radius:26px;background:linear-gradient(120deg,#672534,#a92e48 65%,#d96a70);color:white;box-shadow:var(--shadow)}
-.hero h2{font-size:clamp(23px,4vw,34px);margin:0 0 10px}
-.hero p{line-height:1.8;margin:0;color:#fff0ed;max-width:760px}
-.hero .actions{margin-top:18px}
-.hero .light{background:#fff;color:#8d2a40}
-.notice{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;color:var(--muted);line-height:1.7;margin:15px 0}
-.notice b{color:var(--ink)}
-.stats{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
-.stat{background:#fff;border:1px solid var(--line);border-radius:13px;padding:10px 14px;color:var(--muted);font-size:13px}
-.stat strong{font-size:18px;color:var(--red);margin-left:5px}
-.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0}
-.toolbar input,.toolbar select{padding:13px;border:1px solid var(--line);border-radius:13px;background:#fff;color:var(--ink)}
-.toolbar input{flex:1;min-width:190px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,255px),1fr));gap:15px}
-.card{background:#fff;border:1px solid var(--line);border-radius:19px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:185px}
-.cardtop{min-height:95px;background:linear-gradient(135deg,#fff0e9,#f8d9d4);display:grid;place-items:center;font-size:40px;position:relative}
-.cardtop img{width:100%;height:150px;object-fit:cover}
-.cardbody{padding:15px;display:flex;flex-direction:column;flex:1}
-.card h3{font-size:18px;line-height:1.4;margin:0 0 8px;overflow-wrap:anywhere}
-.muted{font-size:13px;color:var(--muted);line-height:1.6;overflow-wrap:anywhere}
-.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
-.tag{background:#fff0ec;color:#994253;border-radius:30px;padding:5px 9px;font-size:11px}
-.cardbuttons{display:flex;gap:7px;margin-top:auto;padding-top:14px}
-.cardbuttons button{font-size:12px;padding:9px}
-.cardbuttons .open{flex:1;background:var(--red);color:white}
-.empty{text-align:center;padding:32px 18px;border:1px dashed #e2b8b1;background:#fffdfc;border-radius:20px}
-.empty .emoji{font-size:42px}
-.empty h3{margin:8px 0}
-.empty p{max-width:650px;margin:0 auto 15px;color:var(--muted);line-height:1.8}
-.sectiontitle{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:22px 0 12px}
-.sectiontitle h2{margin:0;font-size:22px}
-.modalbg{position:fixed;inset:0;background:#241316a6;display:none;align-items:center;justify-content:center;padding:12px;z-index:10;overflow:auto}
-.modalbg.show{display:flex}
-.modal{width:min(720px,100%);max-height:94vh;overflow:auto;background:#fffaf8;border-radius:22px;padding:20px;box-shadow:0 25px 80px #371b2050}
-.modalhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
-.modalhead h2{margin:0}
-.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
-.field.full{grid-column:1/-1}
-.field label{font-size:13px;font-weight:bold;color:#76534e}
-.field input,.field textarea,.field select{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:white;color:var(--ink)}
-.field textarea{min-height:100px;line-height:1.7}
-.small{font-size:12px;color:var(--muted);line-height:1.7}
-.modalbuttons{display:flex;gap:8px;flex-wrap:wrap}
-.detailtext{white-space:pre-wrap;line-height:1.8;overflow-wrap:anywhere}
-.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#352421;color:white;padding:12px 17px;border-radius:12px;display:none;z-index:20;max-width:90vw}
-.toast.show{display:block}
-footer{padding:24px 0;color:#9b8079;font-size:12px;line-height:1.8}
-@media(max-width:600px){
-.wrap{padding:14px}
-.actions{width:100%}
-.actions button{flex:1}
-.formgrid{grid-template-columns:1fr}
-.field.full{grid-column:auto}
-.toolbar select{flex:1}
-.hero{border-radius:20px}
+:root {
+  --bg: #fff8f5;
+  --paper: #ffffff;
+  --ink: #352421;
+  --muted: #806b66;
+  --red: #a92e48;
+  --pink: #fae8e5;
+  --line: #efd8d2;
+  --green: #32764c;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: radial-gradient(circle at 90% 0%, #ffe8df, transparent 35%), var(--bg);
+  font-family: Arial, sans-serif;
+  color: var(--ink);
+}
+button, input, select, textarea { font: inherit; }
+button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 12px;
+  padding: 11px 15px;
+  font-weight: bold;
+}
+button:hover { filter: brightness(.96); }
+.primary { background: var(--red); color: white; }
+.soft { background: var(--pink); color: var(--red); border: 1px solid var(--line); }
+.wrap { max-width: 1150px; margin: auto; padding: 20px; }
+.top { display:flex; align-items:center; justify-content:space-between; gap:15px; flex-wrap:wrap; }
+.brand { display:flex; align-items:center; gap:12px; }
+.logo {
+  background: linear-gradient(145deg,#702331,#b94755);
+  width:58px; height:58px; border-radius:17px;
+  display:grid; place-items:center; flex-shrink:0;
+}
+.brand h1 { margin:0; font-size:clamp(23px,4vw,34px); }
+.brand p { margin:5px 0; color:var(--muted); font-size:14px; }
+.actions { display:flex; gap:8px; flex-wrap:wrap; }
+.hero {
+  margin:22px 0; padding:clamp(22px,4vw,38px);
+  border-radius:24px;
+  background:linear-gradient(120deg,#672534,#a92e48 65%,#d96a70);
+  color:white;
+}
+.hero h2 { font-size:clamp(24px,4vw,34px); margin:0 0 12px; }
+.hero p { line-height:1.8; margin:0; color:#fff0ed; }
+.hero .actions { margin-top:18px; }
+.hero .light { background:white; color:var(--red); }
+.notice {
+  background:white; border:1px solid var(--line); border-radius:15px;
+  padding:14px; margin:16px 0; line-height:1.8; color:var(--muted);
+}
+.stats { display:flex; gap:9px; flex-wrap:wrap; margin:18px 0; }
+.stat { background:white; border:1px solid var(--line); border-radius:12px; padding:12px; color:var(--muted); }
+.stat strong { color:var(--red); font-size:19px; }
+.toolbar { display:flex; gap:9px; flex-wrap:wrap; margin:18px 0; }
+.toolbar input, .toolbar select {
+  background:white; border:1px solid var(--line); border-radius:12px;
+  padding:13px; color:var(--ink); min-width:130px;
+}
+.toolbar input { flex:1; min-width:200px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr)); gap:15px; }
+.card { background:white; border:1px solid var(--line); border-radius:18px; overflow:hidden; display:flex; flex-direction:column; }
+.cardtop {
+  min-height:100px; background:linear-gradient(135deg,#fff0e9,#f8d9d4);
+  display:grid; place-items:center; font-size:40px; position:relative;
+}
+.cardtop img { width:100%; height:155px; object-fit:cover; }
+.cardbody { padding:15px; display:flex; flex-direction:column; flex:1; }
+.card h3 { margin:0 0 8px; line-height:1.5; overflow-wrap:anywhere; }
+.muted { color:var(--muted); font-size:13px; line-height:1.7; overflow-wrap:anywhere; }
+.tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+.tag { background:#fff0ec; color:#994253; border-radius:20px; padding:5px 9px; font-size:12px; }
+.tag.green { background:#e6f4e9; color:var(--green); }
+.cardbuttons { display:flex; gap:6px; margin-top:auto; padding-top:14px; }
+.cardbuttons button { font-size:12px; padding:9px; }
+.cardbuttons .open { flex:1; background:var(--red); color:white; }
+.sectiontitle { display:flex; justify-content:space-between; align-items:center; margin:22px 0 12px; gap:10px; }
+.sectiontitle h2 { margin:0; }
+.empty { text-align:center; padding:30px 15px; border:1px dashed #e2b8b1; background:white; border-radius:18px; }
+.empty .emoji { font-size:42px; }
+.empty p { line-height:1.8; color:var(--muted); }
+.modalbg {
+  position:fixed; inset:0; background:#241316aa; display:none;
+  align-items:center; justify-content:center; padding:12px; z-index:10; overflow:auto;
+}
+.modalbg.show { display:flex; }
+.modal { width:min(700px,100%); max-height:94vh; overflow:auto; background:#fffaf8; border-radius:20px; padding:20px; }
+.modalhead { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:15px; }
+.modalhead h2 { margin:0; }
+.formgrid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.field { display:flex; flex-direction:column; gap:7px; margin-bottom:12px; }
+.field.full { grid-column:1/-1; }
+.field label { font-size:14px; font-weight:bold; }
+.field input:not([type=checkbox]), .field textarea, .field select {
+  width:100%; padding:12px; border:1px solid var(--line);
+  border-radius:11px; background:white; color:var(--ink);
+}
+.field textarea { min-height:90px; }
+.checks { display:flex; flex-wrap:wrap; gap:18px; }
+.small { color:var(--muted); font-size:12px; line-height:1.7; }
+.modalbuttons { display:flex; gap:8px; flex-wrap:wrap; }
+.detailtext { white-space:pre-wrap; line-height:1.8; overflow-wrap:anywhere; }
+.toast {
+  position:fixed; bottom:18px; left:50%; transform:translateX(-50%);
+  background:#352421; color:white; padding:13px 18px; border-radius:12px;
+  display:none; z-index:20; max-width:90vw;
+}
+.toast.show { display:block; }
+footer { padding:25px 0; color:#9b8079; font-size:12px; line-height:1.8; }
+@media(max-width:600px) {
+  .wrap { padding:13px; }
+  .actions { width:100%; }
+  .actions button { flex:1; }
+  .formgrid { grid-template-columns:1fr; }
+  .field.full { grid-column:auto; }
+  .hero { border-radius:18px; }
+  .toolbar select { flex:1; }
 }
 </style>
 </head>
+
 <body>
 <div class="wrap">
 
 <header class="top">
- <div class="brand">
-  <div class="logo" aria-label="לוגו המטבח של אמא">
-   <svg viewBox="0 0 64 64" width="44" height="44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M23 16 C17 10 27 8 23 3 M40 16 C34 10 44 8 40 3" fill="none" stroke="#fff5ed" stroke-width="3" stroke-linecap="round"/>
-    <path d="M15 25 Q32 15 49 25 Z" fill="#e9b8a8" stroke="#fff5ed" stroke-width="2"/>
-    <rect x="28" y="19" width="8" height="4" rx="2" fill="#fff5ed"/>
-    <path d="M15 28 H49 L45 47 Q32 55 19 47 Z" fill="#e9b8a8" stroke="#fff5ed" stroke-width="2.5" stroke-linejoin="round"/>
-    <path d="M15 32 H9 Q6 32 7 37 Q8 40 17 39 M49 32 H55 Q58 32 57 37 Q56 40 47 39" fill="none" stroke="#fff5ed" stroke-width="3" stroke-linecap="round"/>
-    <path d="M32 43 C29 40 23 36 26 32 C28 29 31 31 32 34 C34 30 38 29 40 32 C43 36 36 41 32 43 Z" fill="#a92e48"/>
-   </svg>
+  <div class="brand">
+    <div class="logo" aria-label="לוגו המטבח של אמא">
+      <svg viewBox="0 0 64 64" width="42" height="42" xmlns="http://www.w3.org/2000/svg">
+        <path d="M23 16 C17 10 27 8 23 3 M40 16 C34 10 44 8 40 3"
+          fill="none" stroke="#fff5ed" stroke-width="3" stroke-linecap="round"/>
+        <path d="M15 25 Q32 15 49 25 Z" fill="#ffd4d8" stroke="#fff5ed" stroke-width="2"/>
+        <rect x="28" y="19" width="8" height="4" rx="2" fill="#fff5ed"/>
+        <path d="M15 28 H49 L45 47 Q32 55 19 47 Z"
+          fill="#ffd4d8" stroke="#fff5ed" stroke-width="2.5"/>
+        <path d="M15 32 H9 Q6 32 7 37 Q8 40 17 39 M49 32 H55 Q58 32 57 37 Q56 40 47 39"
+          fill="none" stroke="#fff5ed" stroke-width="3" stroke-linecap="round"/>
+        <path d="M32 43 C29 40 23 36 26 32 C28 29 31 31 32 34 C34 30 38 29 40 32 C43 36 36 41 32 43 Z"
+          fill="#a92e48"/>
+      </svg>
+    </div>
+    <div>
+      <h1>המתכונים של אמא</h1>
+      <p>כל המתכונים המשפחתיים במקום אחד</p>
+    </div>
   </div>
-  <div>
-   <h1>המתכונים של אמא</h1>
-   <p>כל המתכונים המשפחתיים במקום אחד</p>
+  <div class="actions">
+    <button class="soft" id="importBtn">ייבוא מוואטסאפ</button>
+    <button class="primary" id="addBtn">＋ הוספת מתכון</button>
   </div>
- </div>
- <div class="actions">
-  <button class="soft" id="importBtn">ייבוא מוואטסאפ</button>
-  <button class="primary" id="addBtn">＋ הוספת מתכון</button>
- </div>
 </header>
 
 <section class="hero">
- <h2>פותחים את המחברת המשפחתית</h2>
- <p>שומרים קישורים מאתרי מתכונים, מתכונים כתובים וכל הדברים הטעימים של הבית — מסודרים, נוחים לחיפוש ותמיד בהישג יד.</p>
- <div class="actions">
-  <button class="light" id="heroAdd">＋ הוספת מתכון</button>
-  <button class="soft" id="heroImport">ייבוא קישורים מוואטסאפ</button>
- </div>
+  <h2>פותחים את המחברת המשפחתית 🍰</h2>
+  <p>שומרים קישורים מאתרי מתכונים, מתכונים כתובים וכל הדברים הטעימים של הבית — מסודרים ונוחים לחיפוש.</p>
+  <div class="actions">
+    <button class="light" id="heroAdd">＋ הוספת מתכון</button>
+    <button class="soft" id="heroImport">ייבוא קישורים מוואטסאפ</button>
+  </div>
 </section>
 
-<div class="notice">💡 <b>המתכונים שלך נשארים אצלך.</b> כרגע הם נשמרים בדפדפן של המכשיר. אפשר לגבות ולהעביר אותם ידנית למכשיר אחר. אל תעלו לכאן קובץ וואטסאפ שמכיל מידע פרטי שאינכם רוצים לחשוף.</div>
+<div class="notice">
+  💡 המתכונים נשמרים בדפדפן שבו משתמשים. האתר הציבורי אינו פרטי, והמתכונים אינם מסתנכרנים אוטומטית בין מכשירים. אפשר להשתמש בגיבוי כדי להעביר אותם. אל תכניסו מידע אישי שאינכם רוצים לחשוף.
+</div>
 
 <div class="stats">
- <div class="stat"><strong id="countAll">0</strong> מתכונים</div>
- <div class="stat"><strong id="countFav">0</strong> מועדפים</div>
- <div class="stat"><strong id="countCats">0</strong> קטגוריות</div>
+  <div class="stat"><strong id="countAll">0</strong> מתכונים</div>
+  <div class="stat"><strong id="countFav">0</strong> מועדפים</div>
+  <div class="stat"><strong id="countCats">0</strong> קטגוריות</div>
 </div>
 
 <div class="toolbar">
- <input id="search" type="search" placeholder="🔎 חיפוש לפי שם, אתר או מצרכים">
- <select id="categoryFilter">
-  <option value="">כל הקטגוריות</option>
-  <option>עוגות וקינוחים</option><option>מאפים</option><option>ארוחות</option><option>סלטים</option><option>מרקים</option><option>אחר</option>
- </select>
- <select id="sort"><option value="new">החדשים קודם</option><option value="az">לפי שם א–ת</option></select>
- <button id="favFilter" class="soft">♡ רק מועדפים</button>
- <button id="backupBtn" class="soft">גיבוי / שחזור</button>
+  <input id="search" type="search" placeholder="🔎 חפשו לפי מילה, מצרך או אתר...">
+  <select id="categoryFilter">
+    <option value="">כל הקטגוריות</option>
+    <option>עוגות וקינוחים</option>
+    <option>מאפים</option>
+    <option>ארוחות</option>
+    <option>סלטים</option>
+    <option>מרקים</option>
+    <option>אחר</option>
+  </select>
+  <select id="dietFilter">
+    <option value="">כל סוגי התזונה</option>
+    <option value="vegan">🌱 טבעוני</option>
+    <option value="glutenFree">🌾 ללא גלוטן</option>
+    <option value="both">טבעוני וללא גלוטן</option>
+  </select>
+  <select id="sort">
+    <option value="new">החדשים קודם</option>
+    <option value="az">לפי שם א–ת</option>
+  </select>
+  <button id="favFilter" class="soft">♡ רק מועדפים</button>
+  <button id="backupBtn" class="soft">גיבוי / שחזור</button>
 </div>
 
-<div class="sectiontitle"><h2 id="listTitle">ספר המתכונים</h2><span class="muted" id="shownCount"></span></div>
+<div class="sectiontitle">
+  <h2 id="listTitle">ספר המתכונים</h2>
+  <span class="muted" id="shownCount"></span>
+</div>
+
 <div id="recipeGrid" class="grid"></div>
 
 <div id="empty" class="empty" style="display:none">
- <div class="emoji">📒</div>
- <h3>עוד לא הוספנו מתכונים</h3>
- <p>אפשר להתחיל בהוספת קישור מאתר מתכונים או לייבא את קובץ הטקסט של קבוצת הוואטסאפ. כל קישור יהפוך לכרטיס שאפשר לחפש ולסמן כמועדף.</p>
- <button class="primary" id="emptyAdd">הוספת המתכון הראשון</button>
- <button class="soft" id="emptyImport">ייבוא מוואטסאפ</button>
+  <div class="emoji">📒</div>
+  <h3>עוד לא הוספנו מתכונים</h3>
+  <p>הוסיפו קישור מאתר מתכונים או ייבאו קישורים מקובץ הטקסט של וואטסאפ.</p>
+  <button class="primary" id="emptyAdd">הוספת המתכון הראשון</button>
+  <button class="soft" id="emptyImport">ייבוא מוואטסאפ</button>
 </div>
 
-<footer>נבנה באהבה ❤️ · טיפ: שמרו גיבוי מדי פעם. האתר אינו מושך אוטומטית את התוכן מאתרי המקור; הקישור פותח את המתכון המקורי.</footer>
+<footer>
+  נבנה באהבה ❤️ · שמרו גיבוי מדי פעם. קישור למתכון פותח את האתר המקורי; האתר אינו מעתיק אוטומטית את התוכן שלו.
+</footer>
 </div>
 
-<div class="modalbg" id="editModal"><div class="modal">
- <div class="modalhead"><h2 id="editHeading">הוספת מתכון</h2><button class="soft" data-close="editModal">✕ סגירה</button></div>
- <form id="recipeForm">
-  <input type="hidden" id="recipeId">
-  <div class="formgrid">
-   <div class="field full"><label for="recipeTitle">שם המתכון *</label><input id="recipeTitle" required maxlength="120" placeholder="למשל: עוגת שוקולד של שבת"></div>
-   <div class="field full"><label for="recipeUrl">קישור למתכון המקורי</label><input id="recipeUrl" type="url" placeholder="https://..."></div>
-   <div class="field"><label for="recipeCategory">קטגוריה</label><select id="recipeCategory"><option>אחר</option><option>עוגות וקינוחים</option><option>מאפים</option><option>ארוחות</option><option>סלטים</option><option>מרקים</option></select></div>
-   <div class="field"><label for="recipeTime">זמן הכנה</label><input id="recipeTime" placeholder="למשל: 40 דקות"></div>
-   <div class="field"><label for="recipeServings">כמות / מנות</label><input id="recipeServings" placeholder="למשל: 8 מנות"></div>
-   <div class="field"><label for="recipeImage">תמונה (לא חובה)</label><input id="recipeImage" type="file" accept="image/*"></div>
-   <div class="field full"><label for="recipeIngredients">מצרכים (לא חובה)</label><textarea id="recipeIngredients" placeholder="רשימת מצרכים..."></textarea></div>
-   <div class="field full"><label for="recipeInstructions">הוראות הכנה / הערות (לא חובה)</label><textarea id="recipeInstructions" placeholder="הוראות הכנה, הערות או הודעה מוואטסאפ..."></textarea></div>
+<!-- טופס הוספה ועריכה -->
+<div class="modalbg" id="editModal">
+  <div class="modal">
+    <div class="modalhead">
+      <h2 id="editHeading">הוספת מתכון</h2>
+      <button class="soft" data-close="editModal">✕ סגירה</button>
+    </div>
+    <form id="recipeForm">
+      <input type="hidden" id="recipeId">
+      <div class="formgrid">
+        <div class="field full">
+          <label for="recipeTitle">שם המתכון *</label>
+          <input id="recipeTitle" required maxlength="120" placeholder="למשל: עוגת שוקולד">
+        </div>
+        <div class="field full">
+          <label for="recipeUrl">קישור למתכון המקורי</label>
+          <input id="recipeUrl" type="url" placeholder="https://...">
+        </div>
+        <div class="field">
+          <label for="recipeCategory">קטגוריה</label>
+          <select id="recipeCategory">
+            <option>אחר</option>
+            <option>עוגות וקינוחים</option>
+            <option>מאפים</option>
+            <option>ארוחות</option>
+            <option>סלטים</option>
+            <option>מרקים</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="recipeTime">זמן הכנה</label>
+          <input id="recipeTime" placeholder="למשל: 40 דקות">
+        </div>
+        <div class="field">
+          <label for="recipeServings">כמות / מנות</label>
+          <input id="recipeServings" placeholder="למשל: 8 מנות">
+        </div>
+        <div class="field">
+          <label for="recipeImage">תמונה (לא חובה)</label>
+          <input id="recipeImage" type="file" accept="image/*">
+        </div>
+        <div class="field full">
+          <label>התאמות תזונה</label>
+          <div class="checks">
+            <label><input type="checkbox" id="recipeVegan"> 🌱 טבעוני</label>
+            <label><input type="checkbox" id="recipeGlutenFree"> 🌾 ללא גלוטן</label>
+          </div>
+          <span class="small">סמנו רק אם המתכון באמת מתאים. במקרה של צליאק, יש לבדוק גם חשש לזיהום צולב.</span>
+        </div>
+        <div class="field full">
+          <label for="recipeIngredients">מצרכים</label>
+          <textarea id="recipeIngredients" placeholder="רשימת מצרכים..."></textarea>
+        </div>
+        <div class="field full">
+          <label for="recipeInstructions">הוראות הכנה / הערות</label>
+          <textarea id="recipeInstructions" placeholder="הוראות, הערות או טקסט מהודעת וואטסאפ..."></textarea>
+        </div>
+      </div>
+      <div class="modalbuttons">
+        <button class="primary" type="submit">שמירת מתכון</button>
+        <button class="soft" type="button" data-close="editModal">ביטול</button>
+      </div>
+    </form>
   </div>
-  <p class="small">הקישור יישמר, והכפתור בכרטיס יפתח את המתכון באתר המקורי. האתר לא יכול להעתיק אוטומטית את התוכן מכל אתר.</p>
-  <div class="modalbuttons"><button class="primary" type="submit">שמירת מתכון</button><button type="button" class="soft" data-close="editModal">ביטול</button></div>
- </form>
-</div></div>
+</div>
 
-<div class="modalbg" id="importModal"><div class="modal">
- <div class="modalhead"><h2>ייבוא מקבוצת וואטסאפ</h2><button class="soft" data-close="importModal">✕ סגירה</button></div>
- <p>בחרו קובץ TXT שיוצא מוואטסאפ. האתר יחלץ ממנו קישורים, ידלג על קישורים שכבר קיימים ויצור כרטיסים חדשים.</p>
- <p class="small">וואטסאפ: פותחים את הקבוצה ← תפריט / שם הקבוצה ← ייצוא צ׳אט ← ללא מדיה. שמרו את קובץ הטקסט בטלפון או במחשב.</p>
- <div class="field"><label for="chatFile">קובץ ייצוא TXT</label><input id="chatFile" type="file" accept=".txt,text/plain"></div>
- <div class="modalbuttons"><button id="chooseChat" class="primary">בחירת קובץ</button><button data-close="importModal" class="soft">ביטול</button></div>
-</div></div>
+<!-- ייבוא וואטסאפ -->
+<div class="modalbg" id="importModal">
+  <div class="modal">
+    <div class="modalhead">
+      <h2>ייבוא קישורים מוואטסאפ</h2>
+      <button class="soft" data-close="importModal">✕ סגירה</button>
+    </div>
+    <p>בחרו קובץ TXT שיוצא מוואטסאפ. האתר ינסה למצוא בו קישורים וליצור עבורם כרטיסי מתכונים.</p>
+    <p class="small">בוואטסאפ פותחים את פרטי הקבוצה → ייצוא צ׳אט → ללא מדיה. בחרו את קובץ הטקסט שנוצר.</p>
+    <div class="field">
+      <label for="chatFile">קובץ TXT</label>
+      <input id="chatFile" type="file" accept=".txt,text/plain">
+    </div>
+    <button class="primary" id="chooseChat">בחירת קובץ</button>
+  </div>
+</div>
 
-<div class="modalbg" id="detailModal"><div class="modal">
- <div class="modalhead"><h2 id="detailTitle">מתכון</h2><button class="soft" data-close="detailModal">✕ סגירה</button></div>
- <div id="detailBody"></div>
- <div class="modalbuttons" style="margin-top:18px">
-  <button class="primary" id="detailOpen">פתיחת המתכון המקורי</button>
-  <button class="soft" id="detailFav">♡ מועדפים</button>
-  <button class="soft" id="detailEdit">עריכה</button>
-  <button class="soft" id="detailDelete">מחיקה</button>
- </div>
-</div></div>
+<!-- פרטי מתכון -->
+<div class="modalbg" id="detailModal">
+  <div class="modal">
+    <div class="modalhead">
+      <h2 id="detailTitle">מתכון</h2>
+      <button class="soft" data-close="detailModal">✕ סגירה</button>
+    </div>
+    <div id="detailBody"></div>
+    <div class="modalbuttons" style="margin-top:18px">
+      <button class="primary" id="detailOpen">פתיחת המתכון המקורי</button>
+      <button class="soft" id="detailFav">♡ מועדפים</button>
+      <button class="soft" id="detailEdit">עריכה</button>
+      <button class="soft" id="detailDelete">מחיקה</button>
+    </div>
+  </div>
+</div>
 
-<div class="modalbg" id="backupModal"><div class="modal">
- <div class="modalhead"><h2>גיבוי ושחזור</h2><button class="soft" data-close="backupModal">✕ סגירה</button></div>
- <p>הורידו קובץ גיבוי לשמירת המתכונים, או בחרו קובץ גיבוי קודם כדי לשחזר.</p>
- <div class="modalbuttons"><button class="primary" id="downloadBackup">הורדת גיבוי</button><button class="soft" id="restoreBtn">שחזור מקובץ</button><input id="backupFile" type="file" accept=".json,application/json" hidden></div>
- <p class="small">שחזור יחליף את הספר הנוכחי. מומלץ להוריד גיבוי לפני שחזור.</p>
-</div></div>
+<!-- גיבוי -->
+<div class="modalbg" id="backupModal">
+  <div class="modal">
+    <div class="modalhead">
+      <h2>גיבוי ושחזור</h2>
+      <button class="soft" data-close="backupModal">✕ סגירה</button>
+    </div>
+    <p>אפשר להוריד קובץ גיבוי ולהשתמש בו כדי להעביר את המתכונים למכשיר אחר.</p>
+    <div class="modalbuttons">
+      <button class="primary" id="downloadBackup">הורדת גיבוי</button>
+      <button class="soft" id="restoreBtn">שחזור מקובץ</button>
+      <input id="backupFile" type="file" accept=".json,application/json" hidden>
+    </div>
+    <p class="small">שחזור מחליף את המתכונים הקיימים בדפדפן הזה.</p>
+  </div>
+</div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-(function(){
-'use strict';
-const $=id=>document.getElementById(id);
-const KEY='momRecipes.v2';
-let recipes=[],onlyFav=false,currentId=null,pendingImage=null,toastTimer;
+(function () {
+"use strict";
 
-function safeLoad(){
- try{const d=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(d)?d:[]}
- catch{return []}
-}
-function save(){
- try{localStorage.setItem(KEY,JSON.stringify(recipes));return true}
- catch(e){toast('אין מספיק מקום לשמירה. נסו תמונה קטנה יותר או הסירו תמונות.');return false}
-}
-function esc(s=''){
- return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-function toast(s){
- $('toast').textContent=s;$('toast').classList.add('show');
- clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2800);
-}
-function validUrl(s){
- try{const u=new URL(s);return ['http:','https:'].includes(u.protocol)?u.href:''}
- catch{return ''}
-}
-function host(url){
- try{return new URL(url).hostname.replace(/^www\./,'')}
- catch{return ''}
-}
-function openModal(id){$(id).classList.add('show')}
-function closeModal(id){$(id).classList.remove('show')}
+const $ = id => document.getElementById(id);
+const STORAGE_KEY = "mom-recipes-v3";
 
-function render(){
- const q=$('search').value.trim().toLowerCase(),cat=$('categoryFilter').value,sort=$('sort').value;
- let arr=recipes.filter(r=>(!onlyFav||r.favorite)&&(!cat||r.category===cat)&&(!q||[r.title,r.url,r.category,r.ingredients,r.instructions,host(r.url||'')].join(' ').toLowerCase().includes(q)));
- if(sort==='az')arr.sort((a,b)=>a.title.localeCompare(b.title,'he'));
- else arr.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
- $('countAll').textContent=recipes.length;
- $('countFav').textContent=recipes.filter(r=>r.favorite).length;
- $('countCats').textContent=new Set(recipes.map(r=>r.category||'אחר')).size;
- $('shownCount').textContent=`מוצגים ${arr.length} מתוך ${recipes.length}`;
- $('listTitle').textContent=onlyFav?'המתכונים האהובים':'ספר המתכונים';
- $('recipeGrid').innerHTML=arr.map(r=>`<article class="card">
- <div class="cardtop">${r.image?`<img src="${r.image}" alt="">`:'🍲'}${r.favorite?'<span style="position:absolute;top:8px;right:9px;background:white;border-radius:30px;padding:5px 8px;color:#a92e48">♥</span>':''}</div>
- <div class="cardbody"><h3>${esc(r.title)}</h3>
- <div class="muted">${esc(r.url?host(r.url):'מתכון אישי')}${r.time?' · ⏱ '+esc(r.time):''}</div>
- ${r.instructions?`<p class="muted">${esc(r.instructions.slice(0,140))}</p>`:''}
- <div class="tags"><span class="tag">${esc(r.category||'אחר')}</span>${r.imported?'<span class="tag">יובא מוואטסאפ</span>':''}</div>
- <div class="cardbuttons"><button class="open" data-action="detail" data-id="${r.id}">פתיחת כרטיס</button><button class="soft" title="מועדפים" data-action="fav" data-id="${r.id}">${r.favorite?'♥':'♡'}</button><button class="soft" title="עריכה" data-action="edit" data-id="${r.id}">✎</button></div></div></article>`).join('');
- $('empty').style.display=arr.length?'none':'block';
- $('recipeGrid').style.display=arr.length?'grid':'none';
-}
-function resetForm(){
- $('recipeForm').reset();$('recipeId').value='';pendingImage=null;$('editHeading').textContent='הוספת מתכון';
-}
-function addRecipe(){resetForm();openModal('editModal')}
-function editRecipe(id){
- const r=recipes.find(x=>x.id===id);if(!r)return;resetForm();
- $('recipeId').value=r.id;$('recipeTitle').value=r.title||'';$('recipeUrl').value=r.url||'';
- $('recipeCategory').value=r.category||'אחר';$('recipeTime').value=r.time||'';
- $('recipeServings').value=r.servings||'';$('recipeIngredients').value=r.ingredients||'';
- $('recipeInstructions').value=r.instructions||'';pendingImage=r.image||null;
- $('editHeading').textContent='עריכת מתכון';openModal('editModal');
-}
-function detail(id){
- const r=recipes.find(x=>x.id===id);if(!r)return;currentId=id;
- $('detailTitle').textContent=r.title;
- $('detailBody').innerHTML=`${r.image?`<img src="${r.image}" alt="" style="width:100%;max-height:300px;object-fit:cover;border-radius:14px">`:''}
- <p class="muted">${esc(r.category||'אחר')}${r.time?' · '+esc(r.time):''}${r.servings?' · '+esc(r.servings):''}</p>
- ${r.url?`<p><a href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${esc(r.url)}</a></p>`:''}
- ${r.ingredients?`<h3>מצרכים</h3><div class="detailtext">${esc(r.ingredients)}</div>`:''}
- ${r.instructions?`<h3>הוראות / הערות</h3><div class="detailtext">${esc(r.instructions)}</div>`:''}`;
- $('detailOpen').style.display=r.url?'inline-block':'none';
- $('detailFav').textContent=r.favorite?'♥ הסרה מהמועדפים':'♡ הוספה למועדפים';
- openModal('detailModal');
-}
-function extractUrls(s){
- const matches=s.match(/(?:https?:\/\/|www\.)[^\s<>"']+/gi)||[];
- const cleaned=matches.map(x=>validUrl(x.replace(/[),.!?;}\]]+$/,''))).filter(Boolean);
- return [...new Set(cleaned)];
-}
-function titleFrom(text,url,i){
- let t=text.replace(/(?:https?:\/\/|www\.)[^\s<>"']+/gi,' ').replace(/[\[\]_*~]/g,' ').replace(/\s+/g,' ').trim();
- return (t||('מתכון מ־'+host(url))||('קישור למתכון '+i)).slice(0,120);
-}
-function parseWhatsApp(raw){
- const lines=raw.replace(/^\uFEFF/,'').split(/\r?\n/);let out=[],cur=null;
- const re=/^(?:\[)?(\d{1,2}[./-]\d{1,2}[./-]\d{2,4},?\s+\d{1,2}:\d{2}(?::\d{2})?(?:\s*[AP]M)?)\]?\s*[-–]\s*(.*)$/;
- for(const line of lines){
-  const m=line.match(re);
-  if(m){
-   if(cur)out.push(cur);
-   let rest=m[2],i=rest.indexOf(': ');
-   cur={text:i>=0?rest.slice(i+2):rest};
-  }else if(cur)cur.text+='\n'+line;
- }
- if(cur)out.push(cur);
- if(!out.length)out=[{text:raw}];
- return out;
-}
-function compressImage(file){
- return new Promise((resolve,reject)=>{
-  const rd=new FileReader();rd.onerror=reject;
-  rd.onload=()=>{
-   const im=new Image();im.onerror=reject;
-   im.onload=()=>{
-    const c=document.createElement('canvas'),s=Math.min(1,850/Math.max(im.width,im.height));
-    c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);
-    c.getContext('2d').drawImage(im,0,0,c.width,c.height);
-    resolve(c.toDataURL('image/jpeg',.72));
-   };
-   im.src=rd.result;
-  };
-  rd.readAsDataURL(file);
- });
-}
+let recipes = loadRecipes();
+let onlyFav = false;
+let currentId = null;
+let pendingImage = null;
+let toastTimer;
 
-$('recipeForm').addEventListener('submit',async e=>{
- e.preventDefault();
- const id=$('recipeId').value||'r'+Date.now(),old=recipes.find(r=>r.id===id);
- let image=pendingImage;const f=$('recipeImage').files[0];
- if(f){try{image=await compressImage(f)}catch{toast('לא הצלחנו לקרוא את התמונה');return}}
- const rawUrl=$('recipeUrl').value.trim(),url=validUrl(rawUrl);
- if(rawUrl&&!url){toast('הקישור אינו תקין. התחילו ב־https://');return}
- const r={id,title:$('recipeTitle').value.trim(),url,category:$('recipeCategory').value,time:$('recipeTime').value.trim(),servings:$('recipeServings').value.trim(),ingredients:$('recipeIngredients').value.trim(),instructions:$('recipeInstructions').value.trim(),image:image||null,favorite:old?.favorite||false,imported:old?.imported||false,createdAt:old?.createdAt||Date.now()};
- if(old)recipes=recipes.map(x=>x.id===id?r:x);else recipes.unshift(r);
- if(save()){closeModal('editModal');render();toast('המתכון נשמר ❤️')}
-});
-
-$('recipeGrid').addEventListener('click',e=>{
- const b=e.target.closest('[data-action]');if(!b)return;const id=b.dataset.id;
- if(b.dataset.action==='detail')detail(id);
- if(b.dataset.action==='edit')editRecipe(id);
- if(b.dataset.action==='fav'){const r=recipes.find(x=>x.id===id);if(r){r.favorite=!r.favorite;save();render()}}
-});
-
-$('addBtn').onclick=addRecipe;
-$('heroAdd').onclick=addRecipe;
-$('emptyAdd').onclick=addRecipe;
-['importBtn','heroImport','emptyImport'].forEach(id=>$(id).onclick=()=>openModal('importModal'));
-$('favFilter').onclick=()=>{onlyFav=!onlyFav;$('favFilter').textContent=onlyFav?'♥ מציגים מועדפים':'♡ רק מועדפים';render()};
-$('search').oninput=render;
-$('categoryFilter').onchange=render;
-$('sort').onchange=render;
-
-document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeModal(b.dataset.close));
-document.querySelectorAll('.modalbg').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));
-
-$('chooseChat').onclick=()=>$('chatFile').click();
-$('chatFile').onchange=async e=>{
- const f=e.target.files[0];if(!f)return;
- try{
-  const raw=await f.text(),msgs=parseWhatsApp(raw),found=[];
-  for(const m of msgs){
-   const urls=extractUrls(m.text);
-   for(const url of urls)found.push({title:titleFrom(m.text,url,found.length+1),url,category:'אחר',time:'',servings:'',ingredients:'',instructions:m.text.replace(url,'').trim(),image:null,favorite:false,imported:true,createdAt:Date.now()+found.length,id:'r'+Date.now()+Math.random().toString(16).slice(2,7)});
+function loadRecipes() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    return Array.isArray(saved) ? saved : [];
+  } catch {
+    return [];
   }
-  const seen=new Set(recipes.map(r=>r.url).filter(Boolean));
-  const fresh=found.filter(r=>!seen.has(r.url)&&seen.add(r.url));
-  if(!fresh.length){toast('לא נמצאו קישורים חדשים בקובץ');return}
-  recipes=[...fresh,...recipes];
-  if(save()){closeModal('importModal');render();toast(`יובאו ${fresh.length} קישורים`)}
- }catch{toast('לא הצלחנו לקרוא את הקובץ. נסו ייצוא TXT מחדש')}
- finally{e.target.value=''}
+}
+
+function saveRecipes() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(recipes));
+    return true;
+  } catch {
+    showToast("לא ניתן לשמור. ייתכן שהתמונות גדולות מדי.");
+    return false;
+  }
+}
+
+function esc(value) {
+  return String(value || "").replace(/[&<>"']/g, ch => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  }[ch]));
+}
+
+function normalizeText(value) {
+  return String(value || "")
+    .toLocaleLowerCase("he")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[״׳"'.,!?()[\]{}:;_\-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function showToast(message) {
+  $("toast").textContent = message;
+  $("toast").classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => $("toast").classList.remove("show"), 2800);
+}
+
+function validUrl(value) {
+  try {
+    const url = new URL(value);
+    return ["http:", "https:"].includes(url.protocol) ? url.href : "";
+  } catch {
+    return "";
+  }
+}
+
+function host(url) {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return "";
+  }
+}
+
+function openModal(id) {
+  $(id).classList.add("show");
+}
+
+function closeModal(id) {
+  $(id).classList.remove("show");
+}
+
+function render() {
+  const query = normalizeText($("search").value);
+  const terms = query.split(" ").filter(Boolean);
+  const category = $("categoryFilter").value;
+  const diet = $("dietFilter").value;
+  const sort = $("sort").value;
+
+  let list = recipes.filter(recipe => {
+    if (onlyFav && !recipe.favorite) return false;
+    if (category && recipe.category !== category) return false;
+
+    if (diet === "vegan" && !recipe.vegan) return false;
+    if (diet === "glutenFree" && !recipe.glutenFree) return false;
+    if (diet === "both" && !(recipe.vegan && recipe.glutenFree)) return false;
+
+    const searchable = normalizeText([
+      recipe.title, recipe.url, recipe.category,
+      recipe.ingredients, recipe.instructions,
+      host(recipe.url || ""),
+      recipe.vegan ? "טבעוני vegan" : "",
+      recipe.glutenFree ? "ללא גלוטן gluten free" : ""
+    ].join(" "));
+
+    return terms.every(term => searchable.includes(term));
+  });
+
+  if (sort === "az") {
+    list.sort((a, b) => a.title.localeCompare(b.title, "he"));
+  } else {
+    list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+  }
+
+  $("countAll").textContent = recipes.length;
+  $("countFav").textContent = recipes.filter(r => r.favorite).length;
+  $("countCats").textContent = new Set(recipes.map(r => r.category || "אחר")).size;
+  $("shownCount").textContent = `מוצגים ${list.length} מתוך ${recipes.length}`;
+  $("listTitle").textContent = onlyFav ? "המתכונים האהובים" : "ספר המתכונים";
+
+  $("recipeGrid").innerHTML = list.map(recipe => `
+    <article class="card">
+      <div class="cardtop">
+        ${recipe.image ? `<img src="${recipe.image}" alt="">` : "🍲"}
+        ${recipe.favorite ? '<span style="position:absolute;top:8px;right:9px;background:white;border-radius:20px;padding:5px 8px;color:#a92e48">♥</span>' : ""}
+      </div>
+      <div class="cardbody">
+        <h3>${esc(recipe.title)}</h3>
+        <div class="muted">
+          ${esc(recipe.url ? host(recipe.url) : "מתכון אישי")}
+          ${recipe.time ? " · ⏱ " + esc(recipe.time) : ""}
+        </div>
+        ${recipe.instructions ? `<p class="muted">${esc(recipe.instructions.slice(0,130))}</p>` : ""}
+        <div class="tags">
+          <span class="tag">${esc(recipe.category || "אחר")}</span>
+          ${recipe.vegan ? '<span class="tag green">🌱 טבעוני</span>' : ""}
+          ${recipe.glutenFree ? '<span class="tag green">🌾 ללא גלוטן</span>' : ""}
+          ${recipe.imported ? '<span class="tag">יובא מוואטסאפ</span>' : ""}
+        </div>
+        <div class="cardbuttons">
+          <button class="open" data-action="detail" data-id="${esc(recipe.id)}">פתיחת מתכון</button>
+          <button class="soft" data-action="fav" data-id="${esc(recipe.id)}" title="מועדפים">${recipe.favorite ? "♥" : "♡"}</button>
+          <button class="soft" data-action="edit" data-id="${esc(recipe.id)}" title="עריכה">✎</button>
+        </div>
+      </div>
+    </article>
+  `).join("");
+
+  $("empty").style.display = list.length ? "none" : "block";
+  $("recipeGrid").style.display = list.length ? "grid" : "none";
+}
+
+function resetForm() {
+  $("recipeForm").reset();
+  $("recipeId").value = "";
+  pendingImage = null;
+  $("editHeading").textContent = "הוספת מתכון";
+}
+
+function addRecipe() {
+  resetForm();
+  openModal("editModal");
+}
+
+function editRecipe(id) {
+  const recipe = recipes.find(r => r.id === id);
+  if (!recipe) return;
+
+  resetForm();
+  $("recipeId").value = recipe.id;
+  $("recipeTitle").value = recipe.title || "";
+  $("recipeUrl").value = recipe.url || "";
+  $("recipeCategory").value = recipe.category || "אחר";
+  $("recipeTime").value = recipe.time || "";
+  $("recipeServings").value = recipe.servings || "";
+  $("recipeIngredients").value = recipe.ingredients || "";
+  $("recipeInstructions").value = recipe.instructions || "";
+  $("recipeVegan").checked = !!recipe.vegan;
+  $("recipeGlutenFree").checked = !!recipe.glutenFree;
+  pendingImage = recipe.image || null;
+  $("editHeading").textContent = "עריכת מתכון";
+  openModal("editModal");
+}
+
+function showDetails(id) {
+  const recipe = recipes.find(r => r.id === id);
+  if (!recipe) return;
+  currentId = id;
+
+  $("detailTitle").textContent = recipe.title;
+  $("detailBody").innerHTML = `
+    ${recipe.image ? `<img src="${recipe.image}" alt="" style="width:100%;max-height:280px;object-fit:cover;border-radius:14px">` : ""}
+    <p class="muted">
+      ${esc(recipe.category || "אחר")}
+      ${recipe.time ? " · " + esc(recipe.time) : ""}
+      ${recipe.servings ? " · " + esc(recipe.servings) : ""}
+    </p>
+    <div class="tags">
+      ${recipe.vegan ? '<span class="tag green">🌱 טבעוני</span>' : ""}
+      ${recipe.glutenFree ? '<span class="tag green">🌾 ללא גלוטן</span>' : ""}
+    </div>
+    ${recipe.url ? `<p><a href="${esc(recipe.url)}" target="_blank" rel="noopener noreferrer">פתיחת אתר המתכון</a></p>` : ""}
+    ${recipe.ingredients ? `<h3>מצרכים</h3><div class="detailtext">${esc(recipe.ingredients)}</div>` : ""}
+    ${recipe.instructions ? `<h3>הוראות / הערות</h3><div class="detailtext">${esc(recipe.instructions)}</div>` : ""}
+  `;
+
+  $("detailOpen").style.display = recipe.url ? "inline-block" : "none";
+  $("detailFav").textContent = recipe.favorite ? "♥ הסרה מהמועדפים" : "♡ הוספה למועדפים";
+  openModal("detailModal");
+}
+
+function extractUrls(text) {
+  const matches = text.match(/(?:https?:\/\/|www\.)[^\s<>"']+/gi) || [];
+  const urls = matches
+    .map(value => validUrl(value.replace(/[),.!?;}\]]+$/g, "")))
+    .filter(Boolean);
+  return [...new Set(urls)];
+}
+
+function titleFrom(text, url) {
+  const cleaned = text
+    .replace(/(?:https?:\/\/|www\.)[^\s<>"']+/gi, " ")
+    .replace(/[\[\]_*~]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  return (cleaned || "מתכון מ־" + host(url)).slice(0, 120);
+}
+
+function parseWhatsApp(text) {
+  const lines = text.replace(/^\uFEFF/, "").split(/\r?\n/);
+  const messages = [];
+  let current = null;
+  const pattern = /^(?:\[)?(\d{1,2}[./-]\d{1,2}[./-]\d{2,4},?\s+\d{1,2}:\d{2}(?::\d{2})?(?:\s*[AP]M)?)\]?\s*[-–]\s*(.*)$/;
+
+  for (const line of lines) {
+    const match = line.match(pattern);
+    if (match) {
+      if (current) messages.push(current);
+      const rest = match[2];
+      const separator = rest.indexOf(": ");
+      current = { text: separator >= 0 ? rest.slice(separator + 2) : rest };
+    } else if (current) {
+      current.text += "\n" + line;
+    }
+  }
+
+  if (current) messages.push(current);
+  if (!messages.length) messages.push({text});
+  return messages;
+}
+
+function compressImage(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = () => {
+      const image = new Image();
+      image.onerror = reject;
+      image.onload = () => {
+        const canvas = document.createElement("canvas");
+        const scale = Math.min(1, 800 / Math.max(image.width, image.height));
+        canvas.width = Math.round(image.width * scale);
+        canvas.height = Math.round(image.height * scale);
+        canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL("image/jpeg", 0.7));
+      };
+      image.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+$("recipeForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const id = $("recipeId").value || "r" + Date.now();
+  const old = recipes.find(r => r.id === id);
+  let image = pendingImage;
+  const file = $("recipeImage").files[0];
+
+  if (file) {
+    try {
+      image = await compressImage(file);
+    } catch {
+      showToast("לא הצלחנו לקרוא את התמונה.");
+      return;
+    }
+  }
+
+  const rawUrl = $("recipeUrl").value.trim();
+  const url = validUrl(rawUrl);
+
+  if (rawUrl && !url) {
+    showToast("הקישור אינו תקין. התחילו ב־https://");
+    return;
+  }
+
+  const recipe = {
+    id,
+    title: $("recipeTitle").value.trim(),
+    url,
+    category: $("recipeCategory").value,
+    time: $("recipeTime").value.trim(),
+    servings: $("recipeServings").value.trim(),
+    ingredients: $("recipeIngredients").value.trim(),
+    instructions: $("recipeInstructions").value.trim(),
+    vegan: $("recipeVegan").checked,
+    glutenFree: $("recipeGlutenFree").checked,
+    image: image || null,
+    favorite: old ? !!old.favorite : false,
+    imported: old ? !!old.imported : false,
+    createdAt: old ? old.createdAt : Date.now()
+  };
+
+  if (old) recipes = recipes.map(r => r.id === id ? recipe : r);
+  else recipes.unshift(recipe);
+
+  if (saveRecipes()) {
+    closeModal("editModal");
+    render();
+    showToast("המתכון נשמר ❤️");
+  }
+});
+
+$("recipeGrid").addEventListener("click", event => {
+  const button = event.target.closest("[data-action]");
+  if (!button) return;
+
+  const id = button.dataset.id;
+
+  if (button.dataset.action === "detail") showDetails(id);
+  if (button.dataset.action === "edit") editRecipe(id);
+
+  if (button.dataset.action === "fav") {
+    const recipe = recipes.find(r => r.id === id);
+    if (!recipe) return;
+    recipe.favorite = !recipe.favorite;
+    saveRecipes();
+    render();
+  }
+});
+
+$("addBtn").onclick = addRecipe;
+$("heroAdd").onclick = addRecipe;
+$("emptyAdd").onclick = addRecipe;
+
+["importBtn","heroImport","emptyImport"].forEach(id => {
+  $(id).onclick = () => openModal("importModal");
+});
+
+$("favFilter").onclick = () => {
+  onlyFav = !onlyFav;
+  $("favFilter").textContent = onlyFav ? "♥ מציגים מועדפים" : "♡ רק מועדפים";
+  render();
 };
 
-$('backupBtn').onclick=()=>openModal('backupModal');
-$('downloadBackup').onclick=()=>{
- const blob=new Blob([JSON.stringify({version:2,recipes},null,2)],{type:'application/json'});
- const a=document.createElement('a'),u=URL.createObjectURL(blob);
- a.href=u;a.download='המתכונים-של-אמא-גיבוי.json';a.click();
- setTimeout(()=>URL.revokeObjectURL(u),1000);toast('הגיבוי הורד');
-};
-$('restoreBtn').onclick=()=>$('backupFile').click();
-$('backupFile').onchange=async e=>{
- const f=e.target.files[0];if(!f)return;
- try{
-  const d=JSON.parse(await f.text()),arr=Array.isArray(d)?d:d.recipes;
-  if(!Array.isArray(arr))throw Error();
-  if(!confirm('השחזור יחליף את ספר המתכונים הנוכחי. להמשיך?'))return;
-  recipes=arr;save();render();toast('הגיבוי שוחזר');
- }catch{toast('קובץ הגיבוי אינו תקין')}
- finally{e.target.value=''}
+$("search").addEventListener("input", render);
+$("categoryFilter").addEventListener("change", render);
+$("dietFilter").addEventListener("change", render);
+$("sort").addEventListener("change", render);
+
+document.querySelectorAll("[data-close]").forEach(button => {
+  button.onclick = () => closeModal(button.dataset.close);
+});
+
+document.querySelectorAll(".modalbg").forEach(modal => {
+  modal.addEventListener("click", event => {
+    if (event.target === modal) closeModal(modal.id);
+  });
+});
+
+$("chooseChat").onclick = () => $("chatFile").click();
+
+$("chatFile").addEventListener("change", async event => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  try {
+    const text = await file.text();
+    const messages = parseWhatsApp(text);
+    const found = [];
+
+    for (const message of messages) {
+      const urls = extractUrls(message.text);
+
+      for (const url of urls) {
+        found.push({
+          id: "r" + Date.now() + Math.random().toString(16).slice(2),
+          title: titleFrom(message.text, url),
+          url,
+          category: "אחר",
+          time: "",
+          servings: "",
+          ingredients: "",
+          instructions: message.text.replace(url, "").trim(),
+          image: null,
+          favorite: false,
+          imported: true,
+          vegan: false,
+          glutenFree: false,
+          createdAt: Date.now() + found.length
+        });
+      }
+    }
+
+    const existing = new Set(recipes.map(r => r.url).filter(Boolean));
+    const fresh = found.filter(r => {
+      if (existing.has(r.url)) return false;
+      existing.add(r.url);
+      return true;
+    });
+
+    if (!fresh.length) {
+      showToast("לא נמצאו קישורים חדשים בקובץ.");
+      return;
+    }
+
+    recipes = [...fresh, ...recipes];
+
+    if (saveRecipes()) {
+      closeModal("importModal");
+      render();
+      showToast(`יובאו ${fresh.length} קישורים`);
+    }
+  } catch {
+    showToast("לא הצלחנו לקרוא את הקובץ. נסו ייצוא TXT מחדש.");
+  } finally {
+    event.target.value = "";
+  }
+});
+
+$("backupBtn").onclick = () => openModal("backupModal");
+
+$("downloadBackup").onclick = () => {
+  const data = JSON.stringify({version:3, recipes}, null, 2);
+  const blob = new Blob([data], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "mom-recipes-backup.json";
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  showToast("הגיבוי הורד");
 };
 
-$('detailOpen').onclick=()=>{
- const r=recipes.find(x=>x.id===currentId);
- if(r?.url)window.open(r.url,'_blank','noopener,noreferrer');
-};
-$('detailFav').onclick=()=>{
- const r=recipes.find(x=>x.id===currentId);
- if(r){r.favorite=!r.favorite;save();detail(r.id);render()}
-};
-$('detailEdit').onclick=()=>{const id=currentId;closeModal('detailModal');editRecipe(id)};
-$('detailDelete').onclick=()=>{
- const r=recipes.find(x=>x.id===currentId);
- if(r&&confirm('למחוק את המתכון "'+r.title+'"?')){
-  recipes=recipes.filter(x=>x.id!==currentId);save();closeModal('detailModal');render();toast('המתכון נמחק');
- }
+$("restoreBtn").onclick = () => $("backupFile").click();
+
+$("backupFile").addEventListener("change", async event => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  try {
+    const data = JSON.parse(await file.text());
+    const restored = Array.isArray(data) ? data : data.recipes;
+
+    if (!Array.isArray(restored)) throw new Error("Invalid backup");
+    if (!confirm("השחזור יחליף את ספר המתכונים הנוכחי. להמשיך?")) return;
+
+    recipes = restored;
+    if (saveRecipes()) {
+      render();
+      showToast("הגיבוי שוחזר");
+    }
+  } catch {
+    showToast("קובץ הגיבוי אינו תקין.");
+  } finally {
+    event.target.value = "";
+  }
+});
+
+$("detailOpen").onclick = () => {
+  const recipe = recipes.find(r => r.id === currentId);
+  if (recipe && recipe.url) {
+    window.open(recipe.url, "_blank", "noopener,noreferrer");
+  }
 };
 
-recipes=safeLoad();
+$("detailFav").onclick = () => {
+  const recipe = recipes.find(r => r.id === currentId);
+  if (!recipe) return;
+  recipe.favorite = !recipe.favorite;
+  saveRecipes();
+  showDetails(recipe.id);
+  render();
+};
+
+$("detailEdit").onclick = () => {
+  const id = currentId;
+  closeModal("detailModal");
+  editRecipe(id);
+};
+
+$("detailDelete").onclick = () => {
+  const recipe = recipes.find(r => r.id === currentId);
+  if (!recipe) return;
+
+  if (confirm(`למחוק את המתכון "${recipe.title}"?`)) {
+    recipes = recipes.filter(r => r.id !== currentId);
+    saveRecipes();
+    closeModal("detailModal");
+    render();
+    showToast("המתכון נמחק");
+  }
+};
+
 render();
 })();
 </script>
